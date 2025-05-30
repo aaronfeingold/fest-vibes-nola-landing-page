@@ -1,10 +1,14 @@
 "use client"
 
+import type React from "react"
+
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Label } from "@/components/ui/label"
 import {
   Music,
   Users,
@@ -15,7 +19,6 @@ import {
   Star,
   Play,
   Heart,
-  Share2,
   TrendingUp,
   Clock,
   Mic2,
@@ -23,15 +26,68 @@ import {
   Volume2,
   Sparkles,
   ArrowRight,
+  Mail,
 } from "lucide-react"
 
 export default function HomePage() {
   const [isVisible, setIsVisible] = useState(false)
   const [chatMessage, setChatMessage] = useState("")
+  const [showBetaModal, setShowBetaModal] = useState(false)
+  const [showEmailForm, setShowEmailForm] = useState(false)
+  const [email, setEmail] = useState("")
+  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState("")
 
   useEffect(() => {
     setIsVisible(true)
   }, [])
+
+  const handleBoomyClick = () => {
+    setShowBetaModal(true)
+  }
+
+  const handleJoinBeta = () => {
+    setShowBetaModal(false)
+    setShowEmailForm(true)
+  }
+
+  const handleEmailSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!email) return
+
+    setIsSubmitting(true)
+    setSubmitError("")
+
+    try {
+      // Submit to Netlify Forms
+      const formData = new FormData()
+      formData.append("form-name", "beta-waitlist")
+      formData.append("email", email)
+      formData.append("timestamp", new Date().toISOString())
+
+      const response = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(formData as any).toString(),
+      })
+
+      if (response.ok) {
+        setIsSubmitted(true)
+        setTimeout(() => {
+          setShowEmailForm(false)
+          setIsSubmitted(false)
+          setEmail("")
+        }, 3000)
+      } else {
+        throw new Error("Submission failed")
+      }
+    } catch (error) {
+      setSubmitError("Something went wrong. Please try again.")
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
 
   const features = [
     {
@@ -73,14 +129,20 @@ export default function HomePage() {
   ]
 
   const mockEvents = [
-    { name: "Electric Nights", venue: "The Underground", time: "9:00 PM", genre: "Electronic", attendees: 234 },
-    { name: "Jazz & Soul", venue: "Blue Note Cafe", time: "7:30 PM", genre: "Jazz", attendees: 89 },
-    { name: "Rock Revival", venue: "Stadium Arena", time: "8:00 PM", genre: "Rock", attendees: 1247 },
-    { name: "Indie Vibes", venue: "Rooftop Lounge", time: "6:00 PM", genre: "Indie", attendees: 156 },
+    { name: "Trombone Shorty", venue: "Tipitinas", time: "9:00 PM", genre: "Funk", attendees: 234 },
+    { name: "Soul Rebels", venue: "Blue Nile", time: "7:30 PM", genre: "New Orleans Popular Music", attendees: 89 },
+    { name: "Rebirth Brass Band", venue: "Maple Leaf", time: "8:00 PM", genre: "Brass", attendees: 133 },
+    { name: "Tank & The Bangas", venue: "Music Box Village", time: "6:00 PM", genre: "Funk", attendees: 156 },
   ]
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+      {/* Hidden Netlify Form for form detection */}
+      <form name="beta-waitlist" netlify netlify-honeypot="bot-field" hidden>
+        <input type="email" name="email" />
+        <input type="text" name="timestamp" />
+      </form>
+
       {/* Animated Background Elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
@@ -88,13 +150,109 @@ export default function HomePage() {
         <div className="absolute top-1/2 left-1/2 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl animate-pulse delay-500"></div>
       </div>
 
+      {/* Beta Modal */}
+      <Dialog open={showBetaModal} onOpenChange={setShowBetaModal}>
+        <DialogContent className="bg-slate-800 border-slate-700 text-white max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold text-center mb-2">🎵 Coming Soon!</DialogTitle>
+            <DialogDescription className="text-gray-300 text-center text-base leading-relaxed">
+              Fest-Vibes is currently under development. We're working hard to bring you the ultimate AI-powered music
+              festival experience!
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 pt-4">
+            <div className="text-center">
+              <p className="text-gray-300 mb-4">
+                Want to be among the first to experience Boomy and plan your perfect music weekends?
+              </p>
+              <div className="flex flex-col gap-3">
+                <Button
+                  onClick={handleJoinBeta}
+                  className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
+                >
+                  <Mail className="w-4 h-4 mr-2" />
+                  Join Beta Waitlist
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => setShowBetaModal(false)}
+                  className="border-slate-600 text-gray-300 hover:bg-slate-700"
+                >
+                  Maybe Later
+                </Button>
+              </div>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Email Form Modal */}
+      <Dialog open={showEmailForm} onOpenChange={setShowEmailForm}>
+        <DialogContent className="bg-slate-800 border-slate-700 text-white max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold text-center mb-2">🎧 Join the Beta Waitlist</DialogTitle>
+            <DialogDescription className="text-gray-300 text-center">
+              Enter your email to get notified when Fest-Vibes launches!
+            </DialogDescription>
+          </DialogHeader>
+          {!isSubmitted ? (
+            <form onSubmit={handleEmailSubmit} className="space-y-4 pt-4">
+              <div className="space-y-2">
+                <Label htmlFor="email" className="text-gray-300">
+                  Email Address
+                </Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="your@email.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  disabled={isSubmitting}
+                  className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-purple-500 disabled:opacity-50"
+                />
+              </div>
+              {submitError && (
+                <div className="text-red-400 text-sm text-center bg-red-500/10 p-2 rounded">{submitError}</div>
+              )}
+              <div className="flex flex-col gap-3">
+                <Button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 disabled:opacity-50"
+                >
+                  <Mail className="w-4 h-4 mr-2" />
+                  {isSubmitting ? "Adding you to the list..." : "Get Early Access"}
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setShowEmailForm(false)}
+                  disabled={isSubmitting}
+                  className="border-slate-600 text-gray-300 hover:bg-slate-700 disabled:opacity-50"
+                >
+                  Cancel
+                </Button>
+              </div>
+            </form>
+          ) : (
+            <div className="text-center py-8">
+              <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Mail className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-2">You're on the list! 🎉</h3>
+              <p className="text-gray-300">We'll notify you as soon as Fest-Vibes is ready to rock your weekends!</p>
+              <p className="text-gray-400 text-sm mt-2">Check your email for confirmation.</p>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+
       {/* Navigation */}
       <nav className="relative z-10 flex items-center justify-between p-6 lg:px-8">
         <div className="flex items-center space-x-2">
-          <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
-            <Radio className="w-6 h-6 text-white" />
-          </div>
-          <span className="text-2xl font-bold text-white">Fest-Vibes</span>
+          <img src="/boomy-nav.png" alt="Boomy the Boombox" className="w-14 h-14 rounded-lg object-cover" />
+          <span className="text-2xl font-bold text-white">Fest Vibes Nola</span>
         </div>
         <div className="hidden md:flex items-center space-x-8">
           <a href="#features" className="text-gray-300 hover:text-white transition-colors">
@@ -106,7 +264,10 @@ export default function HomePage() {
           <a href="#analytics" className="text-gray-300 hover:text-white transition-colors">
             Analytics
           </a>
-          <Button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600">
+          <Button
+            onClick={handleBoomyClick}
+            className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
+          >
             Get Started
           </Button>
         </div>
@@ -123,7 +284,7 @@ export default function HomePage() {
               AI-Powered Festival Planning
             </Badge>
             <h1 className="text-5xl lg:text-7xl font-bold text-white mb-6 leading-tight">
-              Your Weekend
+              Your Own Music
               <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
                 {" "}
                 Festival
@@ -132,12 +293,13 @@ export default function HomePage() {
               Starts Here
             </h1>
             <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
-              Transform any weekend into a personalized music festival. Discover local live music, plan with friends,
-              and experience the ultimate decentralized festival in your pocket.
+              Transform any day into a personalized music festival. Discover live local music, plan with friends, and
+              experience the ultimate decentralized festival vibes in your pocket.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button
                 size="lg"
+                onClick={handleBoomyClick}
                 className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-lg px-8 py-4"
               >
                 <MessageCircle className="w-5 h-5 mr-2" />
@@ -147,7 +309,8 @@ export default function HomePage() {
               <Button
                 size="lg"
                 variant="outline"
-                className="border-purple-500/50 text-purple-300 hover:bg-purple-500/10 text-lg px-8 py-4"
+                disabled
+                className="border-purple-500/50 text-purple-300/50 text-lg px-8 py-4 cursor-not-allowed opacity-50"
               >
                 <Play className="w-5 h-5 mr-2" />
                 Watch Demo
@@ -209,51 +372,12 @@ export default function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <Card className="bg-slate-800/50 border-slate-700/50 backdrop-blur-sm">
-                <CardHeader>
-                  <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
-                      <Radio className="w-5 h-5 text-white" />
-                    </div>
-                    <div>
-                      <CardTitle className="text-white">Boomy the Boombox</CardTitle>
-                      <CardDescription className="text-green-400">Online</CardDescription>
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="bg-slate-700/50 rounded-lg p-4">
-                    <p className="text-gray-300">
-                      Hey! I'm Boomy 🎵 What kind of music vibe are you feeling this weekend? I can help you discover
-                      amazing local shows and plan the perfect music experience!
-                    </p>
-                  </div>
-                  <div className="bg-purple-500/20 rounded-lg p-4 ml-8">
-                    <p className="text-gray-300">
-                      I love electronic music and want to find some good shows this Saturday night
-                    </p>
-                  </div>
-                  <div className="bg-slate-700/50 rounded-lg p-4">
-                    <p className="text-gray-300">
-                      Perfect! 🎧 I found 3 amazing electronic shows happening Saturday night. "Electric Nights" at The
-                      Underground looks incredible - 234 people are already going! Want me to check if your friends are
-                      interested too?
-                    </p>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Input
-                      placeholder="Type your message..."
-                      value={chatMessage}
-                      onChange={(e) => setChatMessage(e.target.value)}
-                      className="bg-slate-700/50 border-slate-600 text-white placeholder-gray-400"
-                    />
-                    <Button size="sm" className="bg-gradient-to-r from-purple-500 to-pink-500">
-                      <ArrowRight className="w-4 h-4" />
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
+            <div className="flex justify-center">
+              <img
+                src="/boomy-chat-demo.png"
+                alt="Boomy the Boombox chat interface showing conversation about finding electronic music shows"
+                className="w-full max-w-lg rounded-lg shadow-2xl hover:scale-105 transition-transform duration-300"
+              />
             </div>
 
             <div className="space-y-6">
@@ -391,83 +515,27 @@ export default function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card className="bg-slate-800/50 border-slate-700/50 backdrop-blur-sm">
-              <CardContent className="p-6">
-                <div className="flex items-center space-x-3 mb-4">
-                  <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full"></div>
-                  <div>
-                    <p className="text-white font-medium">Sarah M.</p>
-                    <p className="text-gray-400 text-sm">@sarahmusic</p>
-                  </div>
-                </div>
-                <p className="text-gray-300 mb-4">
-                  "Just discovered this amazing jazz trio at Blue Note Cafe through Fest-Vibes! Who wants to join me
-                  next Friday? 🎷"
-                </p>
-                <div className="flex items-center space-x-4 text-gray-400 text-sm">
-                  <button className="flex items-center space-x-1 hover:text-purple-400">
-                    <Heart className="w-4 h-4" />
-                    <span>12</span>
-                  </button>
-                  <button className="flex items-center space-x-1 hover:text-purple-400">
-                    <Share2 className="w-4 h-4" />
-                    <span>Share</span>
-                  </button>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-slate-800/50 border-slate-700/50 backdrop-blur-sm">
-              <CardContent className="p-6">
-                <div className="flex items-center space-x-3 mb-4">
-                  <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full"></div>
-                  <div>
-                    <p className="text-white font-medium">Mike R.</p>
-                    <p className="text-gray-400 text-sm">@mikebeats</p>
-                  </div>
-                </div>
-                <p className="text-gray-300 mb-4">
-                  "Created a 3-day festival itinerary with Boomy! Electronic Friday, Rock Saturday, and Chill Sunday.
-                  Perfect weekend planned! 🎵"
-                </p>
-                <div className="flex items-center space-x-4 text-gray-400 text-sm">
-                  <button className="flex items-center space-x-1 hover:text-purple-400">
-                    <Heart className="w-4 h-4" />
-                    <span>8</span>
-                  </button>
-                  <button className="flex items-center space-x-1 hover:text-purple-400">
-                    <Share2 className="w-4 h-4" />
-                    <span>Share</span>
-                  </button>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-slate-800/50 border-slate-700/50 backdrop-blur-sm">
-              <CardContent className="p-6">
-                <div className="flex items-center space-x-3 mb-4">
-                  <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full"></div>
-                  <div>
-                    <p className="text-white font-medium">Alex K.</p>
-                    <p className="text-gray-400 text-sm">@alexvibes</p>
-                  </div>
-                </div>
-                <p className="text-gray-300 mb-4">
-                  "Following 15 local artists now! Fest-Vibes notifications helped me catch an impromptu acoustic set
-                  last night. Magic! ✨"
-                </p>
-                <div className="flex items-center space-x-4 text-gray-400 text-sm">
-                  <button className="flex items-center space-x-1 hover:text-purple-400">
-                    <Heart className="w-4 h-4" />
-                    <span>15</span>
-                  </button>
-                  <button className="flex items-center space-x-1 hover:text-purple-400">
-                    <Share2 className="w-4 h-4" />
-                    <span>Share</span>
-                  </button>
-                </div>
-              </CardContent>
-            </Card>
+            <div className="flex justify-center">
+              <img
+                src="/social-sarah.png"
+                alt="Sarah M. social post about jazz trio discovery"
+                className="w-full max-w-sm rounded-lg shadow-lg hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+            <div className="flex justify-center">
+              <img
+                src="/social-mike-new.png"
+                alt="Mike R. social post about creating a 3-day festival itinerary with Boomy"
+                className="w-full max-w-sm rounded-lg shadow-lg hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+            <div className="flex justify-center">
+              <img
+                src="/social-alex-new.png"
+                alt="Alex K. social post about following local artists and discovering impromptu shows"
+                className="w-full max-w-sm rounded-lg shadow-lg hover:scale-105 transition-transform duration-300"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -484,6 +552,7 @@ export default function HomePage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
                 size="lg"
+                onClick={handleBoomyClick}
                 className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-lg px-8 py-4"
               >
                 <MessageCircle className="w-5 h-5 mr-2" />
@@ -493,7 +562,8 @@ export default function HomePage() {
               <Button
                 size="lg"
                 variant="outline"
-                className="border-purple-500/50 text-purple-300 hover:bg-purple-500/10 text-lg px-8 py-4"
+                disabled
+                className="border-purple-500/50 text-purple-300/50 text-lg px-8 py-4 cursor-not-allowed opacity-50"
               >
                 <Volume2 className="w-5 h-5 mr-2" />
                 Explore Features
@@ -506,7 +576,7 @@ export default function HomePage() {
       {/* Footer */}
       <footer className="relative z-10 px-6 lg:px-8 py-12 border-t border-slate-700/50">
         <div className="mx-auto max-w-7xl">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
             <div className="space-y-4">
               <div className="flex items-center space-x-2">
                 <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
@@ -564,6 +634,22 @@ export default function HomePage() {
                 <li>
                   <a href="#" className="hover:text-white transition-colors">
                     Events
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-white font-semibold mb-4">About</h3>
+              <ul className="space-y-2 text-gray-400">
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Our Story
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Careers
                   </a>
                 </li>
               </ul>
