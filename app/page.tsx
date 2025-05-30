@@ -38,13 +38,17 @@ export default function HomePage() {
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState("")
+  const [showBoomyVibes, setShowBoomyVibes] = useState(false)
 
   useEffect(() => {
     setIsVisible(true)
   }, [])
 
   const handleBoomyClick = () => {
-    setShowBetaModal(true)
+    setShowBoomyVibes(true)
+    setTimeout(() => {
+      setShowBoomyVibes(false)
+    }, 3000)
   }
 
   const handleJoinBeta = () => {
@@ -248,11 +252,38 @@ export default function HomePage() {
         </DialogContent>
       </Dialog>
 
+      {/* Boomy Vibes Animation Overlay */}
+      {showBoomyVibes && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+          <div
+            className={`relative transition-all duration-1000 ${
+              showBoomyVibes ? "animate-bounce-in opacity-100 scale-100" : "opacity-0 scale-50"
+            }`}
+          >
+            <div className="relative overflow-hidden rounded-3xl shadow-2xl border-4 border-purple-500/50">
+              <img
+                src="/boomy-vibes.png"
+                alt="Boomy the Boombox in vibrant New Orleans street art style"
+                className="w-96 h-96 object-cover animate-pulse-glow"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-purple-900/20 to-transparent pointer-events-none" />
+            </div>
+            <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full animate-ping" />
+            <div className="absolute -bottom-2 -left-2 w-6 h-6 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full animate-ping delay-500" />
+          </div>
+        </div>
+      )}
+
       {/* Navigation */}
       <nav className="relative z-10 flex items-center justify-between p-6 lg:px-8">
         <div className="flex items-center space-x-2">
-          <img src="/boomy-nav.png" alt="Boomy the Boombox" className="w-14 h-14 rounded-lg object-cover" />
-          <span className="text-2xl font-bold text-white">Fest Vibes Nola</span>
+          <button
+            onClick={handleBoomyClick}
+            className="transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 rounded-lg"
+          >
+            <img src="/boomy-nav.png" alt="Boomy the Boombox" className="w-14 h-14 rounded-lg object-cover" />
+          </button>
+          <span className="text-2xl font-bold text-transparent bg-gradient-to-r from-purple-400 to-green-500 bg-clip-text">Fest Vibes Nola</span>
         </div>
         <div className="hidden md:flex items-center space-x-8">
           <a href="#features" className="text-gray-300 hover:text-white transition-colors">
