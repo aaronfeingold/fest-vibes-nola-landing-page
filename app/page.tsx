@@ -43,7 +43,6 @@ import {
 
 export default function HomePage() {
   const [isVisible, setIsVisible] = useState(false);
-  const [chatMessage, setChatMessage] = useState("");
   const [showBetaModal, setShowBetaModal] = useState(false);
   const [showEmailForm, setShowEmailForm] = useState(false);
   const [email, setEmail] = useState("");
@@ -86,7 +85,7 @@ export default function HomePage() {
       formData.append("email", email);
       formData.append("timestamp", new Date().toISOString());
 
-      const response = await fetch("/", {
+      const response = await fetch("/__forms.html", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams(formData as any).toString(),
