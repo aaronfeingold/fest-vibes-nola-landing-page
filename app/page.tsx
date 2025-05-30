@@ -18,18 +18,21 @@ export default function Home() {
     setSubmitError("")
 
     try {
-      // Convert FormData to URLSearchParams for proper encoding
-      const urlEncodedData = new URLSearchParams()
-      urlEncodedData.append("form-name", "beta-waitlist")
-      urlEncodedData.append("email", email)
-      urlEncodedData.append("timestamp", new Date().toISOString())
+      // Create FormData for Netlify Forms
+      const formData = new FormData()
+      formData.append("form-name", "beta-waitlist")
+      formData.append("email", email)
+      formData.append("timestamp", new Date().toISOString())
+
+      // Convert to URLSearchParams for proper encoding
+      const urlEncodedData = new URLSearchParams(formData as any).toString()
 
       const response = await fetch("/__forms.html", {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
-        body: urlEncodedData.toString(),
+        body: urlEncodedData,
       })
 
       if (response.ok) {
