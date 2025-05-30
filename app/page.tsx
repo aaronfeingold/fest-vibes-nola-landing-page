@@ -20,7 +20,6 @@ import {
   Clock,
   Mic2,
   Radio,
-  Headphones,
   Volume2,
   Sparkles,
   ArrowRight,
@@ -154,18 +153,6 @@ export default function HomePage() {
                 Watch Demo
               </Button>
             </div>
-          </div>
-        </div>
-
-        {/* Floating Music Elements */}
-        <div className="absolute top-1/2 left-10 animate-bounce delay-300">
-          <div className="w-16 h-16 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full flex items-center justify-center backdrop-blur-sm border border-purple-500/30">
-            <Music className="w-8 h-8 text-purple-400" />
-          </div>
-        </div>
-        <div className="absolute top-1/3 right-10 animate-bounce delay-700">
-          <div className="w-12 h-12 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-full flex items-center justify-center backdrop-blur-sm border border-blue-500/30">
-            <Headphones className="w-6 h-6 text-blue-400" />
           </div>
         </div>
       </section>
@@ -610,7 +597,7 @@ export default function HomePage() {
           </div>
 
           <div className="border-t border-slate-700/50 mt-12 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 Fest-Vibes. All rights reserved. Made with ❤️ for music lovers.</p>
+            <p>&copy; 2025 Fest-Vibes. All rights reserved. Made with ❤️ for music lovers.</p>
           </div>
         </div>
       </footer>

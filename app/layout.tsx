@@ -9,7 +9,12 @@ export const metadata: Metadata = {
   title: "Fest-Vibes - Your AI-Powered Music Festival Experience",
   description:
     "Transform any weekend into a personalized music festival. Discover local live music, plan with friends, and experience the ultimate decentralized festival in your pocket.",
-    generator: 'v0.dev'
+  generator: "v0.dev",
+  icons: {
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
+  },
 }
 
 export default function RootLayout({
