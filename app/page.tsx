@@ -27,13 +27,13 @@ export default function Home() {
       // Convert to URLSearchParams for proper encoding
       const urlEncodedData = new URLSearchParams(formData as any).toString()
 
-      const response = await fetch("/__forms.html", {
+      const response = await fetch("/", {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
         body: urlEncodedData,
-      })
+      });
 
       if (response.ok) {
         setIsSubmitted(true)
