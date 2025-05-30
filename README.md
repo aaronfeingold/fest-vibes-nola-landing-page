@@ -1,30 +1,48 @@
 # Fest vibes landing page
 
-*Automatically synced with your [v0.dev](https://v0.dev) deployments*
+*AI-powered weekend music festival planning platform*
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/aaronfeingolds-projects/v0-fest-vibes-landing-page)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.dev-black?style=for-the-badge)](https://v0.dev/chat/projects/bL0xytmJV6F)
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/aaronfeingold/fest-vibes-nola-landing-page)
 
 ## Overview
 
-This repository will stay in sync with your deployed chats on [v0.dev](https://v0.dev).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.dev](https://v0.dev).
+Fest-Vibes is an AI-powered weekend planning platform that brings the festival experience to your fingertips. Transform any weekend into a personalized music festival with local live music discovery, social collaboration, and intelligent planning tools.
+
+## Features
+
+- **AI Planning Assistant** - Chat with Boomy the Boombox for personalized music experiences
+- **Social Collaboration** - Connect with friends to coordinate music event plans
+- **Live Music Discovery** - Find and support local musicians and venues
+- **Event Analytics Dashboard** - Interactive insights into music events and trends
+- **Festival Planning Tools** - Create Gantt charts and timelines for multi-day experiences
+- **Artist & Venue Following** - Stay updated on your favorite musicians
 
 ## Deployment
 
-Your project is live at:
+This project is optimized for Netlify deployment with static site generation.
 
-**[https://vercel.com/aaronfeingolds-projects/v0-fest-vibes-landing-page](https://vercel.com/aaronfeingolds-projects/v0-fest-vibes-landing-page)**
+### Quick Deploy
 
-## Build your app
+Click the deploy button above or:
 
-Continue building your app on:
+1. Fork this repository
+2. Connect to Netlify
+3. Deploy with these settings:
+   - Build command: `npm run build`
+   - Publish directory: `out`
+   - Node version: 18.x
 
-**[https://v0.dev/chat/projects/bL0xytmJV6F](https://v0.dev/chat/projects/bL0xytmJV6F)**
+### Local Development
 
-## How It Works
+\`\`\`bash
+npm install
+npm run dev
+\`\`\`
 
-1. Create and modify your project using [v0.dev](https://v0.dev)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+## Tech Stack
+
+- Next.js 14 with App Router
+- TypeScript
+- Tailwind CSS
+- Lucide React Icons
+- shadcn/ui Components
