@@ -57,19 +57,19 @@ export default function HomePage() {
 
   const handleJoinBetaClick = () => {
     setShowBetaModal(true);
-  };
+  }
 
   const handleBoomyClick = () => {
     setShowBoomyVibes(true);
     setTimeout(() => {
       setShowBoomyVibes(false);
     }, 3000);
-  };
+  }
 
   const handleJoinBeta = () => {
     setShowBetaModal(false);
     setShowEmailForm(true);
-  };
+  }
 
   const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -106,7 +106,7 @@ export default function HomePage() {
     } finally {
       setIsSubmitting(false);
     }
-  };
+  }
 
   const features = [
     {
@@ -413,11 +413,13 @@ export default function HomePage() {
               <Button
                 size="lg"
                 onClick={handleJoinBetaClick}
-                className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-lg px-8 py-4"
+                className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-base sm:text-lg px-4 sm:px-8 py-3 sm:py-4 flex items-center justify-center"
               >
-                <MessageCircle className="w-5 h-5 mr-2" />
-                Chat with Boomy
-                <ArrowRight className="w-5 h-5 ml-2" />
+                <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5 mr-1 sm:mr-2 flex-shrink-0" />
+                <span className="text-center whitespace-normal">
+                  Chat with Boomy
+                </span>
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-1 sm:ml-2 flex-shrink-0" />
               </Button>
               <Button
                 size="lg"
@@ -713,11 +715,13 @@ export default function HomePage() {
               <Button
                 size="lg"
                 onClick={handleJoinBetaClick}
-                className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-lg px-8 py-4"
+                className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-base sm:text-lg px-4 sm:px-8 py-3 sm:py-4 flex items-center justify-center"
               >
-                <MessageCircle className="w-5 h-5 mr-2" />
-                Start Planning with Boomy
-                <ArrowRight className="w-5 h-5 ml-2" />
+                <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5 mr-1 sm:mr-2 flex-shrink-0" />
+                <span className="text-center whitespace-normal">
+                  Start Planning with Boomy
+                </span>
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-1 sm:ml-2 flex-shrink-0" />
               </Button>
               <Button
                 size="lg"
