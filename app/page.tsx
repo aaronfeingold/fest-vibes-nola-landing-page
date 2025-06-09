@@ -185,16 +185,19 @@ export default function HomePage() {
       <Dialog open={showBetaModal} onOpenChange={setShowBetaModal}>
         <DialogContent className="bg-slate-800 border-slate-700 text-white max-w-md">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-bold text-center mb-2">🎵 Coming Soon!</DialogTitle>
+            <DialogTitle className="text-2xl font-bold text-center mb-2">
+              🎵 Coming Soon!
+            </DialogTitle>
             <DialogDescription className="text-gray-300 text-center text-base leading-relaxed">
-              Fest-Vibes is currently under development. We're working hard to bring you the ultimate AI-powered music
-              festival experience!
+              Fest-Vibes is currently under development. We're working hard to
+              bring you the ultimate AI-powered music festival experience!
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 pt-4">
             <div className="text-center">
               <p className="text-gray-300 mb-4">
-                Want to be among the first to experience Boomy and plan your perfect music weekends?
+                Want to be among the first to experience Boomy and plan your
+                perfect music weekends?
               </p>
               <div className="flex flex-col gap-3">
                 <Button
@@ -221,7 +224,9 @@ export default function HomePage() {
       <Dialog open={showEmailForm} onOpenChange={setShowEmailForm}>
         <DialogContent className="bg-slate-800 border-slate-700 text-white max-w-md">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-bold text-center mb-2">🎧 Join the Beta Waitlist</DialogTitle>
+            <DialogTitle className="text-2xl font-bold text-center mb-2">
+              🎧 Join the Beta Waitlist
+            </DialogTitle>
             <DialogDescription className="text-gray-300 text-center">
               Enter your email to get notified when Fest-Vibes launches!
             </DialogDescription>
@@ -244,7 +249,9 @@ export default function HomePage() {
                 />
               </div>
               {submitError && (
-                <div className="text-red-400 text-sm text-center bg-red-500/10 p-2 rounded">{submitError}</div>
+                <div className="text-red-400 text-sm text-center bg-red-500/10 p-2 rounded">
+                  {submitError}
+                </div>
               )}
               <div className="flex flex-col gap-3">
                 <Button
@@ -253,7 +260,9 @@ export default function HomePage() {
                   className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 disabled:opacity-50"
                 >
                   <Mail className="w-4 h-4 mr-2" />
-                  {isSubmitting ? "Adding you to the list..." : "Get Early Access"}
+                  {isSubmitting
+                    ? "Adding you to the list..."
+                    : "Get Early Access"}
                 </Button>
                 <Button
                   type="button"
@@ -271,9 +280,16 @@ export default function HomePage() {
               <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Mail className="w-8 h-8 text-white" />
               </div>
-              <h3 className="text-xl font-bold text-white mb-2">You're on the list! 🎉</h3>
-              <p className="text-gray-300">We'll notify you as soon as Fest-Vibes is ready to rock your weekends!</p>
-              <p className="text-gray-400 text-sm mt-2">Check your email for confirmation.</p>
+              <h3 className="text-xl font-bold text-white mb-2">
+                You're on the list! 🎉
+              </h3>
+              <p className="text-gray-300">
+                We'll notify you as soon as Fest-Vibes is ready to rock your
+                weekends!
+              </p>
+              <p className="text-gray-400 text-sm mt-2">
+                Check your email for confirmation.
+              </p>
             </div>
           )}
         </DialogContent>
@@ -284,7 +300,9 @@ export default function HomePage() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
           <div
             className={`relative transition-all duration-1000 ${
-              showBoomyVibes ? "animate-bounce-in opacity-100 scale-100" : "opacity-0 scale-50"
+              showBoomyVibes
+                ? "animate-bounce-in opacity-100 scale-100"
+                : "opacity-0 scale-50"
             }`}
           >
             <div className="relative overflow-hidden rounded-3xl shadow-2xl border-4 border-purple-500/50">
@@ -308,18 +326,31 @@ export default function HomePage() {
             onClick={handleBoomyClick}
             className="transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 rounded-lg"
           >
-            <img src="/boomy-nav.png" alt="Boomy the Boombox" className="w-14 h-14 rounded-lg object-cover" />
+            <img
+              src="/boomy-nav.png"
+              alt="Boomy the Boombox"
+              className="w-14 h-14 rounded-lg object-cover"
+            />
           </button>
-          <span className="text-2xl font-bold text-white">Fest Vibes</span>
+          <span className="text-2xl font-bold text-transparent bg-gradient-to-r from-purple-400 to-green-500 bg-clip-text">Fest Vibes</span>
         </div>
         <div className="hidden md:flex items-center space-x-8">
-          <a href="#features" className="text-gray-300 hover:text-white transition-colors">
+          <a
+            href="#features"
+            className="text-gray-300 hover:text-white transition-colors"
+          >
             Features
           </a>
-          <a href="#demo" className="text-gray-300 hover:text-white transition-colors">
+          <a
+            href="#demo"
+            className="text-gray-300 hover:text-white transition-colors"
+          >
             Demo
           </a>
-          <a href="#analytics" className="text-gray-300 hover:text-white transition-colors">
+          <a
+            href="#analytics"
+            className="text-gray-300 hover:text-white transition-colors"
+          >
             Analytics
           </a>
           <Button
@@ -336,7 +367,9 @@ export default function HomePage() {
         <div className="mx-auto max-w-4xl text-center">
           <div
             className={`transition-all duration-1000 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+              isVisible
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-10"
             }`}
           >
             <Badge className="mb-6 bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-purple-300 border-purple-500/30">
@@ -345,13 +378,17 @@ export default function HomePage() {
             </Badge>
             <h1 className="text-5xl lg:text-7xl font-bold text-white mb-6 leading-tight">
               Your Own Music
-              <span className="text-purple-300 dark:text-purple-200"> Festival</span>
+              <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent text-purple-300 dark:text-purple-200">
+                {" "}
+                Festival
+              </span>
               <br />
               Starts Here
             </h1>
             <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
-              Transform any day into a personalized music festival. Discover live local music, plan with friends, and
-              experience the ultimate decentralized festival vibes in your pocket.
+              Transform any day into a personalized music festival. Discover
+              live local music, plan with friends, and experience the ultimate
+              decentralized festival vibes in your pocket.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button
@@ -360,7 +397,9 @@ export default function HomePage() {
                 className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-base sm:text-lg px-4 sm:px-8 py-3 sm:py-4 flex items-center justify-center"
               >
                 <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5 mr-1 sm:mr-2 flex-shrink-0" />
-                <span className="text-center whitespace-normal">Chat with Boomy</span>
+                <span className="text-center whitespace-normal">
+                  Chat with Boomy
+                </span>
                 <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-1 sm:ml-2 flex-shrink-0" />
               </Button>
               <Button
@@ -383,10 +422,14 @@ export default function HomePage() {
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-white mb-4">
               Everything You Need for the Perfect
-              <span className="text-purple-300 dark:text-purple-200"> Music Weekend</span>
+              <span className="text-purple-300 dark:text-purple-200">
+                {" "}
+                Music Weekend
+              </span>
             </h2>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              From AI-powered planning to social collaboration, we've got every aspect of your music experience covered.
+              From AI-powered planning to social collaboration, we've got every
+              aspect of your music experience covered.
             </p>
           </div>
 
@@ -402,7 +445,9 @@ export default function HomePage() {
                   >
                     <feature.icon className="w-6 h-6 text-white" />
                   </div>
-                  <CardTitle className="text-white text-xl">{feature.title}</CardTitle>
+                  <CardTitle className="text-white text-xl">
+                    {feature.title}
+                  </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <CardDescription className="text-gray-300 text-base leading-relaxed">
@@ -419,9 +464,12 @@ export default function HomePage() {
       <section id="demo" className="relative z-10 px-6 lg:px-8 py-20">
         <div className="mx-auto max-w-6xl">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-white mb-4">Meet Boomy, Your AI Festival Planner</h2>
+            <h2 className="text-4xl font-bold text-white mb-4">
+              Meet Boomy, Your AI Festival Planner
+            </h2>
             <p className="text-xl text-gray-300">
-              Chat with our AI assistant to discover and plan your perfect music weekend
+              Chat with our AI assistant to discover and plan your perfect music
+              weekend
             </p>
           </div>
 
@@ -435,7 +483,9 @@ export default function HomePage() {
             </div>
 
             <div className="space-y-6">
-              <h3 className="text-2xl font-bold text-white mb-4">Boomy Can Help You:</h3>
+              <h3 className="text-2xl font-bold text-white mb-4">
+                Boomy Can Help You:
+              </h3>
               <div className="space-y-4">
                 {[
                   {
@@ -460,7 +510,10 @@ export default function HomePage() {
                     text: "Track your favorite artists and venues",
                   },
                 ].map((item, index) => (
-                  <div key={index} className="flex items-center space-x-3 text-gray-300">
+                  <div
+                    key={index}
+                    className="flex items-center space-x-3 text-gray-300"
+                  >
                     <div className="w-8 h-8 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-lg flex items-center justify-center">
                       <item.icon className="w-4 h-4 text-purple-400" />
                     </div>
@@ -477,9 +530,12 @@ export default function HomePage() {
       <section id="analytics" className="relative z-10 px-6 lg:px-8 py-20">
         <div className="mx-auto max-w-7xl">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-white mb-4">Smart Analytics for Smarter Planning</h2>
+            <h2 className="text-4xl font-bold text-white mb-4">
+              Smart Analytics for Smarter Planning
+            </h2>
             <p className="text-xl text-gray-300">
-              Get insights into music trends, event popularity, and discover what's hot in your area
+              Get insights into music trends, event popularity, and discover
+              what's hot in your area
             </p>
           </div>
 
@@ -505,17 +561,24 @@ export default function HomePage() {
                             <Mic2 className="w-5 h-5 text-white" />
                           </div>
                           <div>
-                            <h4 className="text-white font-medium">{event.name}</h4>
+                            <h4 className="text-white font-medium">
+                              {event.name}
+                            </h4>
                             <p className="text-gray-400 text-sm">
                               {event.venue} • {event.time}
                             </p>
                           </div>
                         </div>
                         <div className="text-right">
-                          <Badge variant="secondary" className="bg-purple-500/20 text-purple-300">
+                          <Badge
+                            variant="secondary"
+                            className="bg-purple-500/20 text-purple-300"
+                          >
                             {event.genre}
                           </Badge>
-                          <p className="text-gray-400 text-sm mt-1">{event.attendees} going</p>
+                          <p className="text-gray-400 text-sm mt-1">
+                            {event.attendees} going
+                          </p>
                         </div>
                       </div>
                     ))}
@@ -537,7 +600,9 @@ export default function HomePage() {
                       <TrendingUp className="w-6 h-6 text-white" />
                     </div>
                   </div>
-                  <p className="text-green-400 text-sm mt-2">↗ 23% from last week</p>
+                  <p className="text-green-400 text-sm mt-2">
+                    ↗ 23% from last week
+                  </p>
                 </CardContent>
               </Card>
 
@@ -567,7 +632,9 @@ export default function HomePage() {
                       <Users className="w-6 h-6 text-white" />
                     </div>
                   </div>
-                  <p className="text-purple-400 text-sm mt-2">Music lovers connected</p>
+                  <p className="text-purple-400 text-sm mt-2">
+                    Music lovers connected
+                  </p>
                 </CardContent>
               </Card>
             </div>
@@ -579,8 +646,12 @@ export default function HomePage() {
       <section className="relative z-10 px-6 lg:px-8 py-20">
         <div className="mx-auto max-w-6xl">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-white mb-4">Music is Better with Friends</h2>
-            <p className="text-xl text-gray-300">Connect, share, and experience live music together</p>
+            <h2 className="text-4xl font-bold text-white mb-4">
+              Music is Better with Friends
+            </h2>
+            <p className="text-xl text-gray-300">
+              Connect, share, and experience live music together
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -613,10 +684,13 @@ export default function HomePage() {
       <section className="relative z-10 px-6 lg:px-8 py-20">
         <div className="mx-auto max-w-4xl text-center">
           <div className="bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-3xl p-12 border border-purple-500/20 backdrop-blur-sm">
-            <h2 className="text-4xl font-bold text-white mb-6">Ready to Transform Your Weekends?</h2>
+            <h2 className="text-4xl font-bold text-white mb-6">
+              Ready to Transform Your Weekends?
+            </h2>
             <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-              Join thousands of music lovers who've discovered their perfect festival experience. Start planning your
-              next music adventure today.
+              Join thousands of music lovers who've discovered their perfect
+              festival experience. Start planning your next music adventure
+              today.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
@@ -625,7 +699,9 @@ export default function HomePage() {
                 className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-base sm:text-lg px-4 sm:px-8 py-3 sm:py-4 flex items-center justify-center"
               >
                 <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5 mr-1 sm:mr-2 flex-shrink-0" />
-                <span className="text-center whitespace-normal">Start Planning with Boomy</span>
+                <span className="text-center whitespace-normal">
+                  Start Planning with Boomy
+                </span>
                 <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-1 sm:ml-2 flex-shrink-0" />
               </Button>
               <Button
@@ -653,7 +729,9 @@ export default function HomePage() {
                 </div>
                 <span className="text-xl font-bold text-white">Fest-Vibes</span>
               </div>
-              <p className="text-gray-400">Your decentralized music festival experience, powered by AI.</p>
+              <p className="text-gray-400">
+                Your decentralized music festival experience, powered by AI.
+              </p>
             </div>
 
             <div>
@@ -752,10 +830,13 @@ export default function HomePage() {
           </div>
 
           <div className="border-t border-slate-700/50 mt-12 pt-8 text-center text-gray-400">
-            <p>&copy; 2025 Fest-Vibes. All rights reserved. Made with ❤️ for music lovers.</p>
+            <p>
+              &copy; 2025 Fest-Vibes. All rights reserved. Made with ❤️ for
+              music lovers.
+            </p>
           </div>
         </div>
       </footer>
     </div>
-  )
+  );
 }
