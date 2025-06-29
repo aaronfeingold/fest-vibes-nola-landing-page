@@ -2,7 +2,7 @@
 
 *AI-powered weekend music festival planning platform*
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/aaronfeingold/fest-vibes-nola-landing-page)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/aaronfeingold/fest-vibes-nola-landing-page)
 
 ## Overview
 
@@ -19,24 +19,21 @@ Fest-Vibes is an AI-powered weekend planning platform that brings the festival e
 
 ## Deployment
 
-This project is optimized for Netlify deployment with static site generation.
+This project is optimized for Vercel deployment with Next.js App Router.
 
 ### Quick Deploy
 
 Click the deploy button above or:
 
 1. Fork this repository
-2. Connect to Netlify
-3. Deploy with these settings:
-   - Build command: `npm run build`
-   - Publish directory: `out`
-   - Node version: 18.x
+2. Connect to Vercel
+3. Deploy with automatic settings (Vercel auto-detects Next.js projects)
 
 ### Local Development
 
 \`\`\`bash
-npm install
-npm run dev
+pnpm install
+pnpm run dev
 \`\`\`
 
 ## Tech Stack
