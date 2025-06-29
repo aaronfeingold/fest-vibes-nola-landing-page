@@ -1,4 +1,4 @@
-# Fest vibes landing page
+# Fest Vibes landing page
 
 *AI-powered weekend music festival planning platform*
 
