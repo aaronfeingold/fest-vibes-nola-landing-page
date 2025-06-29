@@ -1,14 +1,27 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Input } from "@/components/ui/input"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Label } from "@/components/ui/label"
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import BetaSignupModal from "@/components/BetaSignupModal";
 import {
   Music,
   Users,
@@ -27,104 +40,105 @@ import {
   Sparkles,
   ArrowRight,
   Mail,
-} from "lucide-react"
+} from "lucide-react";
 
 export default function HomePage() {
-  const [isVisible, setIsVisible] = useState(false)
-  const [showBetaModal, setShowBetaModal] = useState(false)
-  const [showEmailForm, setShowEmailForm] = useState(false)
-  const [email, setEmail] = useState("")
-  const [isSubmitted, setIsSubmitted] = useState(false)
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitError, setSubmitError] = useState("")
-  const [showBoomyVibes, setShowBoomyVibes] = useState(false)
+  const [isVisible, setIsVisible] = useState(false);
+  const [showBetaModal, setShowBetaModal] = useState(false);
+  const [showEmailForm, setShowEmailForm] = useState(false);
+  const [email, setEmail] = useState("");
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const [showBoomyVibes, setShowBoomyVibes] = useState(false);
 
   useEffect(() => {
-    setIsVisible(true)
-  }, [])
+    setIsVisible(true);
+  }, []);
 
   const handleJoinBetaClick = () => {
-    setShowBetaModal(true)
-  }
+    setShowBetaModal(true);
+  };
 
   const handleBoomyClick = () => {
-    setShowBoomyVibes(true)
+    setShowBoomyVibes(true);
     setTimeout(() => {
-      setShowBoomyVibes(false)
-    }, 3000)
-  }
+      setShowBoomyVibes(false);
+    }, 3000);
+  };
 
   const handleJoinBeta = () => {
-    setShowBetaModal(false)
-    setShowEmailForm(true)
-  }
+    setShowBetaModal(false);
+    setShowEmailForm(true);
+  };
 
   const handleEmailSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!email) return
+    e.preventDefault();
+    if (!email) return;
 
-    setIsSubmitting(true)
-    setSubmitError("")
+    setIsSubmitting(true);
+    setSubmitError("");
 
     try {
-      // Submit to Netlify Forms
-      const formData = new FormData()
-      formData.append("form-name", "beta-waitlist")
-      formData.append("email", email)
-      formData.append("timestamp", new Date().toISOString())
-
-      const response = await fetch("/__forms.html", {
+      const response = await fetch("/api/beta-signup", {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams(formData as any).toString(),
-      })
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
 
       if (response.ok) {
-        setIsSubmitted(true)
+        setIsSubmitted(true);
         setTimeout(() => {
-          setShowEmailForm(false)
-          setIsSubmitted(false)
-          setEmail("")
-        }, 3000)
+          setShowEmailForm(false);
+          setIsSubmitted(false);
+          setEmail("");
+        }, 3000);
       } else {
-        throw new Error("Submission failed")
+        setSubmitError(data.error || "Something went wrong. Please try again.");
       }
     } catch (error) {
-      setSubmitError("Something went wrong. Please try again.")
+      setSubmitError("Something went wrong. Please try again.");
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
+  };
 
   const features = [
     {
       icon: MessageCircle,
       title: "AI Planning Assistant",
-      description: "Chat with Boomy the Boombox to craft personalized weekend music experiences",
+      description:
+        "Chat with Boomy the Boombox to craft personalized weekend music experiences",
       color: "from-purple-500 to-pink-500",
     },
     {
       icon: Users,
       title: "Social Collaboration",
-      description: "Connect with friends to coordinate and share music event plans",
+      description:
+        "Connect with friends to coordinate and share music event plans",
       color: "from-blue-500 to-cyan-500",
     },
     {
       icon: Music,
       title: "Live Music Discovery",
-      description: "Find and support local musicians, venues, and live performances",
+      description:
+        "Find and support local musicians, venues, and live performances",
       color: "from-green-500 to-emerald-500",
     },
     {
       icon: BarChart3,
       title: "Event Analytics",
-      description: "Interactive data tables with insights into music events and trends",
+      description:
+        "Interactive data tables with insights into music events and trends",
       color: "from-orange-500 to-red-500",
     },
     {
       icon: Calendar,
       title: "Festival Planning",
-      description: "Create Gantt charts and timelines for multi-day festival experiences",
+      description:
+        "Create Gantt charts and timelines for multi-day festival experiences",
       color: "from-indigo-500 to-purple-500",
     },
     {
@@ -133,7 +147,7 @@ export default function HomePage() {
       description: "Stay updated on your favorite musicians and music venues",
       color: "from-pink-500 to-rose-500",
     },
-  ]
+  ];
 
   const mockEvents = [
     {
@@ -164,16 +178,10 @@ export default function HomePage() {
       genre: "Funk",
       attendees: 156,
     },
-  ]
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-      {/* Hidden Netlify Form for form detection */}
-      <form name="beta-waitlist" netlify netlify-honeypot="bot-field" hidden>
-        <input type="email" name="email" />
-        <input type="text" name="timestamp" />
-      </form>
-
       {/* Animated Background Elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
@@ -182,43 +190,10 @@ export default function HomePage() {
       </div>
 
       {/* Beta Modal */}
-      <Dialog open={showBetaModal} onOpenChange={setShowBetaModal}>
-        <DialogContent className="bg-slate-800 border-slate-700 text-white max-w-md">
-          <DialogHeader>
-            <DialogTitle className="text-2xl font-bold text-center mb-2">
-              🎵 Coming Soon!
-            </DialogTitle>
-            <DialogDescription className="text-gray-300 text-center text-base leading-relaxed">
-              Fest-Vibes is currently under development. We're working hard to
-              bring you the ultimate AI-powered music festival experience!
-            </DialogDescription>
-          </DialogHeader>
-          <div className="space-y-4 pt-4">
-            <div className="text-center">
-              <p className="text-gray-300 mb-4">
-                Want to be among the first to experience Boomy and plan your
-                perfect music weekends?
-              </p>
-              <div className="flex flex-col gap-3">
-                <Button
-                  onClick={handleJoinBeta}
-                  className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
-                >
-                  <Mail className="w-4 h-4 mr-2" />
-                  Join Beta Waitlist
-                </Button>
-                <Button
-                  variant="outline"
-                  onClick={() => setShowBetaModal(false)}
-                  className="border-slate-600 text-gray-300 hover:bg-slate-700"
-                >
-                  Maybe Later
-                </Button>
-              </div>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
+      <BetaSignupModal
+        isOpen={showBetaModal}
+        onClose={() => setShowBetaModal(false)}
+      />
 
       {/* Email Form Modal */}
       <Dialog open={showEmailForm} onOpenChange={setShowEmailForm}>
@@ -332,7 +307,9 @@ export default function HomePage() {
               className="w-14 h-14 rounded-lg object-cover"
             />
           </button>
-          <span className="text-2xl font-bold text-transparent bg-gradient-to-r from-purple-400 to-green-500 bg-clip-text">Fest Vibes</span>
+          <span className="text-2xl font-bold text-transparent bg-gradient-to-r from-purple-400 to-green-500 bg-clip-text">
+            Fest Vibes
+          </span>
         </div>
         <div className="hidden md:flex items-center space-x-8">
           <a
@@ -378,7 +355,7 @@ export default function HomePage() {
             </Badge>
             <h1 className="text-5xl lg:text-7xl font-bold text-white mb-6 leading-tight">
               Your Own Music
-              <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent text-purple-300 dark:text-purple-200">
+              <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-purple-300 dark:text-purple-200 supports-[background-clip:text]:text-transparent">
                 {" "}
                 Festival
               </span>
