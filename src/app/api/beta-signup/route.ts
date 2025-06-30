@@ -58,10 +58,9 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ success: true });
   } catch (error: any) {
-    console.error("Beta signup error:", error);
-
-    // Handle validation errors
+    // Handle validation errors first
     if (error.name === "ZodError") {
+      console.error("Beta signup validation error:", error.errors);
       return NextResponse.json(
         { error: "Invalid request data" },
         { status: 400 }
@@ -72,9 +71,16 @@ export async function POST(request: NextRequest) {
     if (
       error.code === "23505" ||
       error.cause?.code === "23505" ||
-      error.message?.includes("duplicate") ||
-      error.message?.includes("unique constraint")
+      error.constraint === "beta_signups_normalized_email_unique" ||
+      error.message?.includes(
+        "duplicate key value violates unique constraint"
+      ) ||
+      error.message?.includes("beta_signups_normalized_email_unique")
     ) {
+      console.log("Duplicate email signup attempt:", {
+        email: error.detail || "email not available",
+        timestamp: new Date().toISOString(),
+      });
       return NextResponse.json(
         {
           error:
@@ -83,6 +89,15 @@ export async function POST(request: NextRequest) {
         { status: 409 }
       );
     }
+
+    // Log other database errors with more context
+    console.error("Beta signup error:", {
+      message: error.message,
+      code: error.code,
+      constraint: error.constraint,
+      detail: error.detail,
+      cause: error.cause,
+    });
 
     return NextResponse.json(
       { error: "Internal server error" },
