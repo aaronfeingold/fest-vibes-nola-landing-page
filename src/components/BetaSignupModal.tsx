@@ -28,7 +28,7 @@ export default function BetaSignupModal({
             🎵 Join the Beta!
           </h3>
           <p className="text-gray-300">
-            Be the first to experience Fest Vibes when we launch.
+            Be the first to experience Fest Vibes when we launch in New Orleans.
           </p>
         </div>
 

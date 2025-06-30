@@ -665,9 +665,9 @@ export default function HomePage() {
               Ready to Transform Your Weekends?
             </h2>
             <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-              Join thousands of music lovers who've discovered their perfect
-              festival experience. Start planning your next music adventure
-              today.
+              Join thousands of music lovers in New Orleans who've discovered
+              their perfect festival experience. Start planning your next music
+              adventure today.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
